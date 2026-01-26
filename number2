@@ -1,0 +1,49 @@
+//Place it in the footer or sidebar
+
+<div id=”today-visits”>
+
+Today Visits: <strong id=”today-number”>0</strong>
+
+</div>
+
+<script>
+
+document.addEventListener(“DOMContentLoaded”, function () {
+
+fetch(“/wp-admin/admin-ajax.php?action=get_today_visits”)
+
+.then(r => r.json())
+
+.then(d => {
+
+document.getElementById(“today-number”).textContent = d.visits;
+
+});
+
+fetch(“/wp-admin/admin-ajax.php?action=get_last_month_visits”)
+
+.then(r => r.json())
+
+.then(d => {
+
+if (d.success) {
+
+document.getElementById(“last-month-number”).textContent = d.data.total;
+
+} else {
+
+document.getElementById(“last-month-number”).textContent = ‘0’;
+
+}
+
+})
+
+.catch(err => {
+
+console.error(‘Last month error:’, err);
+
+});
+
+});
+
+</script>
