@@ -1,0 +1,78 @@
+// Add this to the functions.php file
+
+function count_today_visits() {
+
+if (is_admin()) return;
+
+$today = date(‘Y-m-d’);
+
+$key = ‘visits_’ . $today;
+
+$visits = get_option($key, 0);
+
+update_option($key, $visits + 1);
+
+}
+
+add_action(‘wp’, ‘count_today_visits’);
+
+
+// پاسخ AJAX برای دریافت بازدید امروز
+
+function ajax_get_today_visits() {
+
+$today = date(‘Y-m-d’);
+
+$key = ‘visits_’ . $today;
+
+$visits = get_option($key, 0);
+
+wp_send_json([
+
+‘visits’ => $visits
+
+]);
+
+}
+
+add_action(‘wp_ajax_get_today_visits’, ‘ajax_get_today_visits’);
+
+add_action(‘wp_ajax_nopriv_get_today_visits’, ‘ajax_get_today_visits’);
+
+function get_last_month_visits_total() {
+
+global $wpdb;
+
+$last_month = wp_date(‘Y-m’, strtotime(‘first day of last month’));
+
+$total = 0;
+
+$options = $wpdb->get_results(
+
+“SELECT option_name, option_value
+
+FROM {$wpdb->options}
+
+WHERE option_name LIKE ‘visits_%'”
+
+);
+
+foreach ($options as $opt) {
+
+if (preg_match(‘/visits_(\d{4})[-_](\d{2})[-_](\d{2})/’, $opt->option_name, $m)) {
+
+$ym = $m[1] . ‘-‘ . $m[2];
+
+if ($ym === $last_month) {
+
+$total += (int) $opt->option_value;
+
+}
+
+}
+
+}
+
+return $total;
+
+}
