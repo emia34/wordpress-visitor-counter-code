@@ -9,6 +9,6 @@ A lightweight PHP snippet to count and display today's visitors in WordPress wit
 - Lightweight & fast
 
 ## Installation
-1. Copy the code from `visitor-counter.php`
+1. Copy the code from `number1`
 2. Paste it into your theme's `functions.php`
 3. Use the provided function (second code) to display visitor count (like footer)
