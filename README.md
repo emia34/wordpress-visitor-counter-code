@@ -1,3 +1,6 @@
+# آمارگیر بازدید سایت وردپرس بدون افزونه
+
+یک اسکریپت ساده و سبک برای نمایش تعداد بازدیدهای روزانه سایت وردپرسی بدون نیاز به نصب هیچ افزونه‌ای
 # wordpress-visitor-counter-code
 Simple PHP code to count daily visitors in WordPress without plugins
 A lightweight PHP snippet to count and display today's visitors in WordPress without using any plugin.
